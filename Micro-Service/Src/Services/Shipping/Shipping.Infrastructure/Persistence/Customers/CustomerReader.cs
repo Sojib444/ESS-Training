@@ -8,10 +8,10 @@ public sealed class CustomerReader : ICustomerReader
     private readonly ShippingDbContext _db;
     public CustomerReader(ShippingDbContext db) => _db = db;
 
-    public Task<CoustomerDto?> GetByIdAsync(Guid id, CancellationToken ct) =>
+    public Task<CustomerDto?> GetByIdAsync(Guid id, CancellationToken ct) =>
         _db.Customers
            .Where(c => c.Id == id)
-           .Select(c => new CoustomerDto(
+           .Select(c => new CustomerDto(
                c.Id,
                c.Name,
                c.Email,
@@ -20,11 +20,11 @@ public sealed class CustomerReader : ICustomerReader
            ))
            .FirstOrDefaultAsync(ct);
 
-    public async Task<IReadOnlyList<CoustomerDto>> GetAllAsync(int skip, int take, CancellationToken ct) =>
+    public async Task<IReadOnlyList<CustomerDto>> GetAllAsync(int skip, int take, CancellationToken ct) =>
         await _db.Customers
                  .OrderBy(c => c.Name)
                  .Skip(skip).Take(take)
-                 .Select(c => new CoustomerDto(
+                 .Select(c => new CustomerDto(
                      c.Id,
                      c.Name,
                      c.Email,

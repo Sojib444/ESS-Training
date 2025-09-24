@@ -2,19 +2,19 @@ using MediatR;
 
 namespace Shipping.Application.Customers;
 
-public class GetCustomerByIdHandler : IRequestHandler<GetCustomerById, CoustomerDto?>
+public class GetCustomerByIdHandler : IRequestHandler<GetCustomerById, CustomerDto?>
 {
     public readonly ICustomerReader _reader;
     public GetCustomerByIdHandler(ICustomerReader reader) => _reader = reader;
-    public Task<CoustomerDto?> Handle(GetCustomerById request, CancellationToken ct) =>
+    public Task<CustomerDto?> Handle(GetCustomerById request, CancellationToken ct) =>
         _reader.GetByIdAsync(request.Id, ct);
 }
 
-public class ListCustomersHandler: IRequestHandler<ListCustomers, IReadOnlyList<CoustomerDto>>
+public class ListCustomersHandler: IRequestHandler<ListCustomers, IReadOnlyList<CustomerDto>>
 {
     public readonly ICustomerReader _reader;
     public ListCustomersHandler(ICustomerReader reader) => _reader = reader;
-    public Task<IReadOnlyList<CoustomerDto>> Handle(ListCustomers request, CancellationToken ct) =>
+    public Task<IReadOnlyList<CustomerDto>> Handle(ListCustomers request, CancellationToken ct) =>
         _reader.GetAllAsync(request.Skip, request.Take, ct);
 }
 

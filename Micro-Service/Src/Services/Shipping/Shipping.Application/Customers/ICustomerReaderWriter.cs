@@ -2,8 +2,8 @@ namespace  Shipping.Application.Customers;
 
 public interface ICustomerReader
 {
-    Task<CoustomerDto?> GetByIdAsync(Guid id, CancellationToken ct);
-    Task<IReadOnlyList<CoustomerDto>> GetAllAsync(int skip, int take, CancellationToken ct);
+    Task<CustomerDto?> GetByIdAsync(Guid id, CancellationToken ct);
+    Task<IReadOnlyList<CustomerDto>> GetAllAsync(int skip, int take, CancellationToken ct);
 }
 
 

@@ -16,9 +16,9 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(CoustomerDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<CoustomerDto>> GetById(Guid id, CancellationToken ct)
+    public async Task<ActionResult<CustomerDto>> GetById(Guid id, CancellationToken ct)
     {
         var dto = await _mediator.Send(new GetCustomerById(id), ct);
         if (dto is null) return NotFound();
@@ -44,8 +44,8 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyList<CoustomerDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyList<CoustomerDto>>> List(
+    [ProducesResponseType(typeof(IReadOnlyList<CustomerDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<CustomerDto>>> List(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 20,
         CancellationToken ct = default)

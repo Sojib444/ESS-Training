@@ -1,0 +1,14 @@
+@for (item of users; track item.id) {
+    <button>
+        <img [src]="'assets/photo/' + item.avater" [alt]="item.name"/> 
+        <p>{{item.name}}</p>
+     </button>
+}
+
+<form (ngSubmit)="Onsubmit()">
+    <input type="text" name="name" placeholder="Enter your name" [(ngModel)]="name"/>
+    <input type="number" name="age" placeholder="Enter your age" [(ngModel)]="age"/>
+    <input type="text" name="profession" placeholder="Enter your profession" [(ngModel)]="profession"/>
+    <input type="text" name="address" placeholder="Enter your address" [(ngModel)]="address"/>
+    <button type="submit">Add User</button>    
+</form>

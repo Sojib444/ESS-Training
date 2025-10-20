@@ -29,6 +29,20 @@ services:
       - RabbitMQ__User=serviceadmin
       - RabbitMQ__Pass=123qwe
 
+  shipping-api:
+    build:
+      context: .
+      dockerfile: Shipping.Api/Dockerfile
+    ports:
+      - "5002:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=host.docker.internal;Port=5435;Database=postgres;Username=serviceadmin;Password=123qwe
+      - RabbitMQ__Host=host.docker.internal
+      - RabbitMQ__Port=5672
+      - RabbitMQ__User=serviceadmin
+      - RabbitMQ__Pass=123qwe
+
   gateway-api:
     build:
       context: .

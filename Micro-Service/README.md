@@ -93,6 +93,7 @@ DotnetCoreMicroService.sln
    dotnet ef database update  -p Src/Services/Catalog/Catalog.Infrastructure -s Src/Services/Catalog/Catalog.Api
    dotnet ef database update  -p Src/Services/Procurement/Procurement.Infrastructure -s Src/Services/Procurement/Procurement.Api
    dotnet ef database update  -p Src/Services/UserManagement/UserManagement.Infrastructure -s Src/Services/UserManagement/UserManagement.Api
+   dotnet ef database update  -p Src/Services/Shipping/Shipping.Infrastructure -s Src/Services/Shipping/Shipping.Api
    ```
 
 ### 2. Run Catalog service

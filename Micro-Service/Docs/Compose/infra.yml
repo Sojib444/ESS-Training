@@ -22,7 +22,7 @@ services:
   # RabbitMQ message broker with management UI
   rabbitmq:
     image: rabbitmq:3.13-management
-    container_name: rabbitmq
+    container_name: home_rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: serviceadmin         # RabbitMQ admin user
       RABBITMQ_DEFAULT_PASS: 123qwe           # RabbitMQ admin password
@@ -41,7 +41,7 @@ services:
   # Redis cache (with password and persistence)
   redis:
     image: redis:6.2-alpine
-    container_name: redis
+    container_name: home_redis
     command: /bin/sh -c "redis-server --save 60 1000 --appendonly yes --requirepass 3Sdjf!d@xnRq --port 6382"
     volumes:
       - redis-data:/data

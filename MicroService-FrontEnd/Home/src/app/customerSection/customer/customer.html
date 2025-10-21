@@ -1,0 +1,28 @@
+<div class="form-section">
+    <h2>Add Customer</h2>
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Enter name" formControlName="name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Enter email" formControlName="email">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="text" placeholder="Enter phone number" formControlName="phoneNumber">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" rows="3" placeholder="Enter address" formControlName="address"></textarea>
+        </div>
+        <button type="submit">Add Customer</button>
+    </form>
+    @if (popUpSuccessMessage) {
+    <app-success-message [message]="customerAddedMessage"></app-success-message>
+    }
+    @if (popUpErrorMessage) {
+    <app-error-message [message]="customerErrorMessage"></app-error-message>
+    }
+</div>

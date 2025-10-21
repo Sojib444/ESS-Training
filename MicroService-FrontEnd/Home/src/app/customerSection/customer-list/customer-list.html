@@ -1,0 +1,23 @@
+<div class="list-section">
+    <h2>Customer List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(item of customerList; track item.id) {
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <td>{{item.address}}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

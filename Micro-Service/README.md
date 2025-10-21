@@ -104,6 +104,11 @@ DotnetCoreMicroService.sln
    ```powershell
    dotnet watch --project Src/Services/Procurement/Procurement.Api
    ```
+
+### 3. Run Procurement service
+```powershell
+dotnet watch --project Src/Services/Shipping/Shipping.Api
+   ```
 ### 4. Run API Gateway
    ```powershell
    dotnet run --project Src/Gateway.Api

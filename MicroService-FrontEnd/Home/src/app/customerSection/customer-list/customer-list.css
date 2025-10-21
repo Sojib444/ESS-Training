@@ -1,0 +1,29 @@
+ /* Right: Customer List */
+ .list-section {
+     flex: 2;
+     background: #fff;
+     padding: 20px;
+     border-radius: 8px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+
+ .list-section h2 {
+     margin-top: 0;
+ }
+
+ table {
+     width: 100%;
+     border-collapse: collapse;
+ }
+
+ table th,
+ table td {
+     border: 1px solid #ddd;
+     padding: 10px;
+     text-align: left;
+ }
+
+ table th {
+     background: #007bff;
+     color: #fff;
+ }

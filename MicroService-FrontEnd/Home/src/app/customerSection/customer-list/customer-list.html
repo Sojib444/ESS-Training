@@ -1,23 +1,45 @@
+
 <div class="list-section">
     <h2>Customer List</h2>
-    <table>
+   @if(customerList().length > 0)
+{
+     <table>
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Address</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @for(item of customerList; track item.id) {
-            <tr>
-                <td>{{item.name}}</td>
-                <td>{{item.email}}</td>
-                <td>{{item.phoneNumber}}</td>
-                <td>{{item.address}}</td>
-            </tr>
+            @for(item of customerList(); track item.id) {
+                @if(editingId === item.id)
+                {
+                    <tr>
+                        <td><input [(ngModel)]="editedCustomer!.name"></td>
+                        <td><input [(ngModel)]="editedCustomer!.email"></td>
+                        <td><input [(ngModel)]="editedCustomer!.phoneNumber"></td>
+                        <td><input [(ngModel)]="editedCustomer!.address"></td>
+                        <td><button class="save" (click)="updateSave(item.id, editedCustomer!)">Save</button></td>
+                    </tr>
+                }
+                @else {
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.phoneNumber}}</td>
+                    <td>{{item.address}}</td>
+                    <td><button class="update" (click)="onUpdate(item.id)">Update</button><button class="delete" (click)="onDelete(item.id)">Delete</button></td>
+                </tr>
+                }
+                
             }
         </tbody>
     </table>
+}
+@else {
+    <p>No customer added yet</p>
+}
 </div>

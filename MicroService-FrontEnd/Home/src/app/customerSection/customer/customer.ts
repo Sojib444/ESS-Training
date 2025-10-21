@@ -37,6 +37,8 @@ export class Customer implements OnInit {
 
     this.customerService.addCustomer(this.customerForm.value).subscribe({
       next: (data) => {
+        this.customerForm.value.id = data.id;
+        this.customerService.customers.set([...this.customerService.customers(), this.customerForm.value]);        
         this.popUpSuccessMessage = true;
         setTimeout(() => {
           this.popUpSuccessMessage = false;

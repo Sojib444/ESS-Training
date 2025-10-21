@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { Header } from "../header/header";
 import { Customer } from "../customerSection/customer/customer";
 import { CustomerList } from "../customerSection/customer-list/customer-list";

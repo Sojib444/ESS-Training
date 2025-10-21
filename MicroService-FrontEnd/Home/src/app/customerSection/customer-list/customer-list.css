@@ -23,7 +23,50 @@
      text-align: left;
  }
 
+  table td input{
+     padding: 5px 0;
+     width: 100%;
+ }
+
+
  table th {
      background: #007bff;
      color: #fff;
  }
+
+ .delete
+{
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: red;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.update
+{
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: rgb(3, 131, 116);
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.save
+{
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: rgb(86, 2, 134);
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    margin-right: 5px;
+    text-align: center;
+}

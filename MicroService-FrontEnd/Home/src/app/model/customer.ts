@@ -14,3 +14,12 @@ interface CustomerWriter
     phoneNumber: string;
     email: string;    
 }
+
+interface Customer
+{
+    id: string;
+    name: string;
+    address: string;
+    phoneNumber: string;
+    email: string;    
+}

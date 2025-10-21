@@ -1,0 +1,3 @@
+@for (item of persons; track item.id) {
+    <p (click)="onChange()">{{item.name}} - {{item.age}} - {{item.BirthDate | date}}/p>
+}

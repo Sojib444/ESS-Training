@@ -10,6 +10,10 @@
                 <th>Email</th>
                 <th>Phone Number</th>
                 <th>Address</th>
+                <th>Type</th>
+                <th>Gander</th>
+                <th>Hobbies</th>
+                <th>Countries</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -31,6 +35,10 @@
                     <td>{{item.email}}</td>
                     <td>{{item.phoneNumber}}</td>
                     <td>{{item.address}}</td>
+                    <td>{{item.customerTypeId}}</td>
+                    <td>{{item.gender}}</td>
+                    <td>{{item.hobbies}}</td>
+                    <td>{{item.countryCodes}}</td>
                     <td><button class="update" (click)="onUpdate(item.id)">Update</button><button class="delete" (click)="onDelete(item.id)">Delete</button></td>
                 </tr>
                 }

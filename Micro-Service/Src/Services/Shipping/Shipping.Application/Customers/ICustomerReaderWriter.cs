@@ -9,7 +9,9 @@ public interface ICustomerReader
 
 public interface ICustomerWriter
 {
-    Task<Guid> AddAsync(string name, string email, string phoneNumber, string address, CancellationToken ct);
-     Task UpdateAsync(Guid id, string name, string email, string phoneNumber, string address, CancellationToken ct);
+    Task<Guid> AddAsync(string name, string email, string phoneNumber, string address, string gender,
+        int customerTypeId, List<string> Hobbies, List<string> CountryCodes, CancellationToken ct);
+     Task UpdateAsync(Guid id, string name, string email, string phoneNumber, string address,
+        string gender, int customerTypeId, List<string> Hobbies, List<string> CountryCodes, CancellationToken ct);
     Task DeleteAsync(Guid id, CancellationToken ct);
 }

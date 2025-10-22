@@ -27,6 +27,8 @@ public sealed class ShippingDbContext : DbContext
             b.Property(x => x.Email).HasMaxLength(256).IsRequired();
             b.Property(x => x.PhoneNumber).HasMaxLength(20).IsRequired();
             b.Property(x => x.Address).HasMaxLength(512).IsRequired();
+            b.Property(x => x.CustomerTypeId).HasMaxLength(512).IsRequired();
+            b.Property(x => x.Gender).HasMaxLength(512).IsRequired();
             b.HasIndex(x => x.Email).IsUnique();
         });
     }

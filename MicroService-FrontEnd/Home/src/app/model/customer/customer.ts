@@ -22,4 +22,8 @@ interface Customer
     address: string;
     phoneNumber: string;
     email: string;    
+    gender: string;
+    customerTypeId: number;
+    hobbies: string[];
+    countryCodes: Number[];
 }

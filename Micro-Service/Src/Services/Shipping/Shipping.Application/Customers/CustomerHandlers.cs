@@ -23,7 +23,8 @@ public class CreateCustomerHandler: IRequestHandler<CreateCustomer, Guid>
     public readonly ICustomerWriter _writer;
     public CreateCustomerHandler(ICustomerWriter writer) => _writer = writer;
     public Task<Guid> Handle(CreateCustomer request, CancellationToken ct) =>
-        _writer.AddAsync(request.Name, request.Email, request.PhoneNumber, request.Address, ct);
+        _writer.AddAsync(request.Name, request.Email, request.PhoneNumber, request.Address,
+            request.gender, request.customerTypeId, request.Hobbies, request.CountryCodes, ct);
 }
 
 public class UpdateCustomerHandler : IRequestHandler<UpdateCustomer>
@@ -31,7 +32,8 @@ public class UpdateCustomerHandler : IRequestHandler<UpdateCustomer>
     public readonly ICustomerWriter _writer;
     public UpdateCustomerHandler(ICustomerWriter writer) => _writer = writer;
     public async Task Handle(UpdateCustomer request, CancellationToken ct) =>
-        await _writer.UpdateAsync(request.Id, request.Name, request.Email, request.PhoneNumber, request.Address, ct);
+        await _writer.UpdateAsync(request.Id, request.Name, request.Email, request.PhoneNumber, request.Address,
+                        request.gender, request.customerTypeId, request.Hobbies, request.CountryCodes, ct);
 }
 
 public class DeleteCustomerHandler : IRequestHandler<DeleteCustomer>

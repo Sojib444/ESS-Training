@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Application.Customers;
 using Shipping.Domain;
@@ -13,17 +14,22 @@ public sealed class CustomerWriter : ICustomerWriter
         _uniqueness = uniqueness;
     }
 
-    public async Task<Guid> AddAsync(string name, string email, string phoneNumber, string address, CancellationToken ct)
+    public async Task<Guid> AddAsync(string name, string email, string phoneNumber, string address,
+       string gender, int customerTypeId, List<string> Hobbies, List<string> CountryCodes , CancellationToken ct)
     {
         if (await _uniqueness.IsCustomerExists(email, phoneNumber, ct))
             throw new ArgumentException("A customer with the same email or phone number already exists.");
-        var entity = new Customer(name, email, phoneNumber, address);
+
+        string hobies = JsonSerializer.Serialize(Hobbies);
+        string countries = JsonSerializer.Serialize(CountryCodes);
+        var entity = new Customer(name, email, phoneNumber, address, gender, customerTypeId, hobies, countries);
         _db.Customers.Add(entity);
         await _db.SaveChangesAsync(ct);
         return entity.Id;
     }
 
-    public async Task UpdateAsync(Guid id, string name, string email, string phoneNumber, string address, CancellationToken ct)
+    public async Task UpdateAsync(Guid id, string name, string email, string phoneNumber, string address,
+        string gender, int customerTypeId, List<string> Hobbies, List<string> CountryCodes, CancellationToken ct)
     {
         var entity = await _db.Customers.FindAsync(new object?[] { id }, ct);
 
@@ -38,10 +44,16 @@ public sealed class CustomerWriter : ICustomerWriter
                 throw new ArgumentException("A customer with the same email or phone number already exists.");
         }
 
+        string hobies = JsonSerializer.Serialize(Hobbies);
+        string countries = JsonSerializer.Serialize(CountryCodes);
         entity.GetType().GetProperty("Name")!.SetValue(entity, name);
         entity.GetType().GetProperty("Email")!.SetValue(entity, email);
         entity.GetType().GetProperty("PhoneNumber")!.SetValue(entity, phoneNumber);
         entity.GetType().GetProperty("Address")!.SetValue(entity, address);
+        entity.GetType().GetProperty("Gender")!.SetValue(entity, gender);
+        entity.GetType().GetProperty("CustomerTypeId")!.SetValue(entity, customerTypeId);
+        entity.GetType().GetProperty("HobbiesJson")!.SetValue(entity, hobies);
+        entity.GetType().GetProperty("CountriesJson")!.SetValue(entity, countries);
         await _db.SaveChangesAsync(ct);
     }
 

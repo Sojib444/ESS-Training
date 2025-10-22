@@ -21,7 +21,7 @@
      font-weight: bold;
  }
 
- .form-group input,
+ .form-group input, option
  .form-group textarea {
      width: 100%;
      padding: 8px 10px;
@@ -45,4 +45,26 @@
 
  .form-section button:hover {
      background: #0056b3;
+ }
+
+ .bold
+ {
+    font-weight: bold;
+ }
+
+ .hobbies{
+    width: 400px;
+    margin-top: 10px
+ }
+
+
+ .multi-select{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+ }
+
+ .multi-select select{
+    width: 100px;
  }

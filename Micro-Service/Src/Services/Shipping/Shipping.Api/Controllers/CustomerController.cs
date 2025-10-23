@@ -47,10 +47,10 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(typeof(IReadOnlyList<CustomerDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<CustomerDto>>> List(
         [FromQuery] int skip = 0,
-        [FromQuery] int take = 20,
+        [FromQuery] int take = 100,
         CancellationToken ct = default)
     {
-        if (take <= 0 || take > 100) take = 20;
+       // if (take <= 0 || take > 100) take = 20;
         var list = await _mediator.Send(new ListCustomers(skip, take), ct);
         return Ok(list);
     }

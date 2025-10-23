@@ -1,7 +1,7 @@
 <div class="list-section">
     <div class="top">
         <h2>Customer List</h2>
-        <input placeholder="Search..." class="search" />
+       @if(customerList().length > 0){ <input placeholder="Search..." class="search" />}
     </div>
     @if(customerList().length > 0)
     {
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @for(item of customerList().slice(currentPage, currentPage+5); track item.id) {
+            @for(item of customerList().slice(currentPage*5-5, currentPage *5); track item.id) {
             @if(editingId === item.id)
             {
             <tr>
@@ -89,19 +89,20 @@
             }
         </tbody>
     </table>
-    <p> {{(currentPage*5) + 1 }} -
-        @if(customerList().length > (currentPage + 1) *5 )
+    <p> {{currentPage*5-5 +1}} -
+        @if(customerList().length < currentPage*5 )
         {
-        <span>{{(currentPage + 1) *5 }}</span>
+        <span>{{ currentPage*5 - (currentPage*5 - customerList().length) }}</span>
         }
         @else
         {
-        <span>{{customerList().length}}</span>
+        <span>{{currentPage*5}}</span>
         }
         out of {{customerList().length}}
     </p>
     <app-pagination (currentPageOutPut)="receiveCurrentPage($event)"
-        [allItems]="customerList().length"></app-pagination>
+        [allItems]="customerList().length"
+        [totalPages]="totalPages"></app-pagination>
     }
     @else {
     <p>No customer added yet</p>

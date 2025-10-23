@@ -24,16 +24,19 @@ export class CustomerList implements OnInit {
   hobbis = Object.values(Hobies);
   countries = Object.values(Country);
 
-  currentPage = 0;
+  currentPage = 1;
 
   ngOnInit(): void {
     this.coustomerService.loadCustomers().subscribe({
       next: (data) => {
-        console.log(data);
         this.customerList.set(data);
       },
       error: (err) => console.error('Failed to load customers:', err)
     });
+  }
+
+  get totalPages(): number {
+  return Math.ceil(this.customerList().length / 5);
   }
 
   toggleHobby(hobby:string, $event: Event)

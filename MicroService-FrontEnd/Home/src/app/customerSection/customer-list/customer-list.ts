@@ -1,14 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { CustomerService } from '../../services/customer/customer-service';
 import { FormsModule } from '@angular/forms';
 import { CoustomerType } from '../../model/customer/customerTypes';
 import { Hobies } from '../../model/demoData/hobies';
 import { Country } from '../../model/demoData/countries';
 import { concatAll } from 'rxjs';
+import { RedirectCommand } from '@angular/router';
+import { Pagination } from "../../pagination/pagination";
 
 @Component({
   selector: 'app-customer-list',
-  imports: [FormsModule],
+  imports: [FormsModule, Pagination],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.css'
 })
@@ -16,11 +18,13 @@ export class CustomerList implements OnInit {
 
   coustomerService = inject(CustomerService);
   customerList = this.coustomerService.customers;
-  editedCustomer : Customer | null = null;
+  editedCustomer  = signal<Customer | null>(null);
   editingId: string | null = null;
   customerTypes = Object.values(CoustomerType);
   hobbis = Object.values(Hobies);
   countries = Object.values(Country);
+
+  currentPage = 0;
 
   ngOnInit(): void {
     this.coustomerService.loadCustomers().subscribe({
@@ -36,20 +40,12 @@ export class CustomerList implements OnInit {
   {
     const isChecked = ($event.target as HTMLInputElement).checked;
     if (!isChecked)
-      this.editedCustomer!.hobbies =  this.editedCustomer?.hobbies.filter(h => h !== hobby) as string[];
+      this.editedCustomer()!.hobbies =  this.editedCustomer()?.hobbies.filter(h => h !== hobby) as string[];
     else
-      this.editedCustomer!.hobbies.push(hobby);
+      this.editedCustomer()!.hobbies.push(hobby);
   }
 
-  selectCoutry($event: Event)
-  {
-    console.log("hhi")
-    // const isChecked = ($event.target as HTMLInputElement).checked;
-    // if (!isChecked)
-    //   this.editedCustomer!.countryCodes = this.editedCustomer?.countryCodes.filter(h => h !== index) as string[];
-    // else
-    //   this.editedCustomer?.countryCodes.push(index);
-  }
+
 
   onDelete(id: string)
   {
@@ -64,7 +60,7 @@ export class CustomerList implements OnInit {
     const customer = this.customerList().find(c => c.id === id);
     if (customer) {
       // clone object to edit
-      this.editedCustomer = { ...customer };
+      this.editedCustomer.set({ ...customer });
       this.editingId = id;
     }
   }
@@ -77,7 +73,7 @@ export class CustomerList implements OnInit {
     this.coustomerService.updateCustomer(id, editedCustomer).subscribe({
       next: (data) => {
         this.customerList.update(list => list.map(c => c.id === id ? editedCustomer : c));
-        this.editedCustomer = null;
+        this.editedCustomer.set(null);
         this.editingId = null;
       },
       error: (error) => {
@@ -85,4 +81,16 @@ export class CustomerList implements OnInit {
       }
     });
   }
+
+  onUpdateCancel()
+  {
+    this.editedCustomer.set(null);
+    this.editingId = null;
+  }
+
+  receiveCurrentPage(currentpage :number)
+  {
+    this.currentPage = currentpage;
+  }
 }
+

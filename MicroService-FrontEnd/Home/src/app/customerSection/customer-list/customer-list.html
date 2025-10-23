@@ -1,5 +1,8 @@
 <div class="list-section">
-    <h2>Customer List</h2>
+    <div class="top">
+        <h2>Customer List</h2>
+        <input placeholder="Search..." class="search" />
+    </div>
     @if(customerList().length > 0)
     {
     <table>
@@ -17,16 +20,16 @@
             </tr>
         </thead>
         <tbody>
-            @for(item of customerList(); track item.id) {
+            @for(item of customerList().slice(currentPage, currentPage+5); track item.id) {
             @if(editingId === item.id)
             {
             <tr>
-                <td><input [(ngModel)]="editedCustomer!.name"></td>
-                <td><input [(ngModel)]="editedCustomer!.email"></td>
-                <td><input [(ngModel)]="editedCustomer!.phoneNumber"></td>
-                <td><input [(ngModel)]="editedCustomer!.address"></td>
+                <td><input [(ngModel)]="editedCustomer()!.name"></td>
+                <td><input [(ngModel)]="editedCustomer()!.email"></td>
+                <td><input [(ngModel)]="editedCustomer()!.phoneNumber"></td>
+                <td><input [(ngModel)]="editedCustomer()!.address"></td>
                 <td>
-                    <select [(ngModel)]="editedCustomer!.customerTypeId" class="select">
+                    <select [(ngModel)]="editedCustomer()!.customerTypeId" class="select">
                         <option [ngValue]="null" disabled>Select customer type</option>
                         @for (item of customerTypes; track $index) {
                         <option [ngValue]="$index">{{item}}</option>
@@ -36,12 +39,12 @@
                 <td>
                     <div class="level-container">
                         <label>
-                            <input type="radio" name="gender" value="Male" [(ngModel)]="editedCustomer!.gender"
+                            <input type="radio" name="gender" value="Male" [(ngModel)]="editedCustomer()!.gender"
                                 class="radio" />
                             Male
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="Female" [(ngModel)]="editedCustomer!.gender" />
+                            <input type="radio" name="gender" value="Female" [(ngModel)]="editedCustomer()!.gender" />
                             Female
                         </label>
                     </div>
@@ -50,7 +53,7 @@
                     <div class="level-container">
                         @for(hobby of hobbis; track $index) {
                         <label>
-                            <input type="checkbox" [checked]="editedCustomer?.hobbies?.includes(hobby)"
+                            <input type="checkbox" [checked]="editedCustomer()?.hobbies?.includes(hobby)"
                                 (change)="toggleHobby(hobby, $event)" />
                             {{ hobby }}
                         </label>
@@ -58,13 +61,15 @@
                     </div>
                 </td>
                 <td>
-                    <select multiple size="5" class="select" [(ngModel)]="editedCustomer!.countryCodes">
-                    @for ( country of countries; track $index) {
-                    <option [ngValue]="country">{{ country }}</option>
-                    }
-                </select>
+                    <select multiple size="5" class="select" [(ngModel)]="editedCustomer()!.countryCodes">
+                        @for ( country of countries; track $index) {
+                        <option [ngValue]="country">{{ country }}</option>
+                        }
+                    </select>
                 </td>
-                <td><button class="save" (click)="updateSave(item.id, editedCustomer!)">Save</button></td>
+                <td><button class="save" (click)="updateSave(item.id, editedCustomer()!)">Save</button>
+                    <button class="cancel" (click)="onUpdateCancel()">Cancel</button>
+                </td>
             </tr>
             }
             @else {
@@ -81,10 +86,22 @@
                         (click)="onDelete(item.id)">Delete</button></td>
             </tr>
             }
-
             }
         </tbody>
     </table>
+    <p> {{(currentPage*5) + 1 }} -
+        @if(customerList().length > (currentPage + 1) *5 )
+        {
+        <span>{{(currentPage + 1) *5 }}</span>
+        }
+        @else
+        {
+        <span>{{customerList().length}}</span>
+        }
+        out of {{customerList().length}}
+    </p>
+    <app-pagination (currentPageOutPut)="receiveCurrentPage($event)"
+        [allItems]="customerList().length"></app-pagination>
     }
     @else {
     <p>No customer added yet</p>

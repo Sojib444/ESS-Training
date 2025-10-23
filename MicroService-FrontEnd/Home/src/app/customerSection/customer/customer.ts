@@ -56,20 +56,6 @@ export class Customer implements OnInit {
     });
   }
 
-  // selectCoutry(country:number, $event: Event)
-  // {
-  //   console.log("ji");
-  //   const isChecked = ($event.target as HTMLInputElement).checked;
-  //   if (!isChecked)
-  //     this.selectedCountries = this.selectedCountries.filter(h => h !== country);
-  //   else
-  //     this.selectedCountries.push(country);
-
-  //   this.customerForm.patchValue({
-  //     countryCodes: this.selectedCountries
-  //   });
-  // }
-
   onSubmit() {
 
     console.log(this.customerForm.value)

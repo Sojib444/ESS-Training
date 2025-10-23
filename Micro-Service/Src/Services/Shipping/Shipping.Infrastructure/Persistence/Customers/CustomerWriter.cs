@@ -38,11 +38,11 @@ public sealed class CustomerWriter : ICustomerWriter
             throw new KeyNotFoundException($"Customer with id '{id}' was not found.");
         }
 
-        if (entity.Email != email || entity.PhoneNumber != phoneNumber)
-        {
-            if (await _uniqueness.IsCustomerExists(email, phoneNumber, ct))
-                throw new ArgumentException("A customer with the same email or phone number already exists.");
-        }
+        // if (entity.Email != email || entity.PhoneNumber != phoneNumber)
+        // {
+        //     if (await _uniqueness.IsCustomerExists(email, phoneNumber, ct))
+        //         throw new ArgumentException("A customer with the same email or phone number already exists.");
+        // }
 
         string hobies = JsonSerializer.Serialize(Hobbies);
         string countries = JsonSerializer.Serialize(CountryCodes);

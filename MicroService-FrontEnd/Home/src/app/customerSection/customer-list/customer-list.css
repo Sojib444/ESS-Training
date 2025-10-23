@@ -14,6 +14,7 @@
  table {
      width: 100%;
      border-collapse: collapse;
+     table-layout: fixed
  }
 
  table th,
@@ -21,6 +22,9 @@
      border: 1px solid #ddd;
      padding: 10px;
      text-align: left;
+     overflow: hidden;
+     word-wrap: break-word;
+     
  }
 
   table td input{
@@ -32,6 +36,12 @@
  table th {
      background: #007bff;
      color: #fff;
+     text-align: center;
+ }
+
+ .small
+ {
+    width: 80px;
  }
 
  .delete
@@ -70,3 +80,21 @@
     margin-right: 5px;
     text-align: center;
 }
+
+.select
+{
+    width: 100%;
+}
+
+.level-container {
+  display: flex;      /* align children horizontally */
+  flex-wrap: wrap;    /* wrap to next line if too long */
+  gap: 10px;          /* space between checkboxes */
+}
+
+label {
+  display: flex;      /* keeps checkbox and text together */
+  align-items: center;
+  gap: 4px;
+}
+

@@ -33,14 +33,14 @@ export class Customer implements OnInit {
       name: new FormControl(''),
       address: new FormControl(''),
       phoneNumber: new FormControl('', Validators.required),
-      customerTypeId: new FormControl(0, Validators.required),
+      customerTypeId: new FormControl(null, Validators.required),
       gender: new FormControl(null, Validators.required),
       hobbies: new FormControl([]),
       countryCodes: new FormControl([]),
     })
 
-    console.log(this.countries);
-    console.log(this.customerTypes);
+    console.log(this.customerForm.value.hobbies);
+    
   }
 
   toggleHobby(hobby: string, $event: Event) {
@@ -56,21 +56,23 @@ export class Customer implements OnInit {
     });
   }
 
-  selectCoutry(country:number, $event: Event)
-  {
-    const isChecked = ($event.target as HTMLInputElement).checked;
-    if (!isChecked)
-      this.selectedCountries = this.selectedCountries.filter(h => h !== country);
-    else
-      this.selectedCountries.push(country);
+  // selectCoutry(country:number, $event: Event)
+  // {
+  //   console.log("ji");
+  //   const isChecked = ($event.target as HTMLInputElement).checked;
+  //   if (!isChecked)
+  //     this.selectedCountries = this.selectedCountries.filter(h => h !== country);
+  //   else
+  //     this.selectedCountries.push(country);
 
-    this.customerForm.patchValue({
-      countryCodes: this.selectedCountries
-    });
-  }
+  //   this.customerForm.patchValue({
+  //     countryCodes: this.selectedCountries
+  //   });
+  // }
 
   onSubmit() {
 
+    console.log(this.customerForm.value)
     if (this.customerForm.invalid) {
       return;
     }
@@ -85,7 +87,9 @@ export class Customer implements OnInit {
         }, 2000);
         
         this.customerForm.reset({
-          customerTypeId: 0
+          customerTypeId: null,
+          hobbies: [],
+          countryCodes:[],
         });
         this.selectedHobbies = [];
         this.selectedCountries = [];

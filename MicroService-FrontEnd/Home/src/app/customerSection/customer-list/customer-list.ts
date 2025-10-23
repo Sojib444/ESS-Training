@@ -1,6 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CustomerService } from '../../services/customer/customer-service';
 import { FormsModule } from '@angular/forms';
+import { CoustomerType } from '../../model/customer/customerTypes';
+import { Hobies } from '../../model/demoData/hobies';
+import { Country } from '../../model/demoData/countries';
+import { concatAll } from 'rxjs';
 
 @Component({
   selector: 'app-customer-list',
@@ -14,6 +18,9 @@ export class CustomerList implements OnInit {
   customerList = this.coustomerService.customers;
   editedCustomer : Customer | null = null;
   editingId: string | null = null;
+  customerTypes = Object.values(CoustomerType);
+  hobbis = Object.values(Hobies);
+  countries = Object.values(Country);
 
   ngOnInit(): void {
     this.coustomerService.loadCustomers().subscribe({
@@ -23,6 +30,25 @@ export class CustomerList implements OnInit {
       },
       error: (err) => console.error('Failed to load customers:', err)
     });
+  }
+
+  toggleHobby(hobby:string, $event: Event)
+  {
+    const isChecked = ($event.target as HTMLInputElement).checked;
+    if (!isChecked)
+      this.editedCustomer!.hobbies =  this.editedCustomer?.hobbies.filter(h => h !== hobby) as string[];
+    else
+      this.editedCustomer!.hobbies.push(hobby);
+  }
+
+  selectCoutry($event: Event)
+  {
+    console.log("hhi")
+    // const isChecked = ($event.target as HTMLInputElement).checked;
+    // if (!isChecked)
+    //   this.editedCustomer!.countryCodes = this.editedCustomer?.countryCodes.filter(h => h !== index) as string[];
+    // else
+    //   this.editedCustomer?.countryCodes.push(index);
   }
 
   onDelete(id: string)

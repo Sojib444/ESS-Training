@@ -20,7 +20,7 @@
         <div class="form-group">
             <label>Customer type</label>
             <select formControlName="customerTypeId">
-                <option [ngValue]="0">Select customer type</option>
+                <option [ngValue]="null" disabled>Select customer type</option>
                 @for (item of customerTypes; track $index) {
                 <option [ngValue]="$index+1">{{item}}</option>
                 }
@@ -36,7 +36,8 @@
             <label class="bold">Hobbies : </label>
             @for(hobby of hobbiList; track $index) {
             <label>
-                <input type="checkbox" (change)="toggleHobby(hobby, $event)"/>
+                <input type="checkbox" [checked]="selectedHobbies.includes(hobby)" 
+                    (change)="toggleHobby(hobby, $event)"/>
                 {{ hobby }}
             </label>
             }
@@ -46,7 +47,7 @@
             <div>
                 <select multiple size="5" formControlName="countryCodes">
                     @for (country of countries; track $index) {
-                    <option (change)="selectCoutry($index, $event)">{{ country }}</option>
+                    <option>{{ country }}</option>
                     }
                 </select>
             </div>    

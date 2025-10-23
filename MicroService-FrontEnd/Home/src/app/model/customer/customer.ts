@@ -25,5 +25,5 @@ interface Customer
     gender: string;
     customerTypeId: number;
     hobbies: string[];
-    countryCodes: Number[];
+    countryCodes: string[];
 }

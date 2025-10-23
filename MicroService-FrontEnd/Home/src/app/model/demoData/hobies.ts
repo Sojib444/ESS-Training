@@ -13,5 +13,5 @@ export const Hobies = [
   'Dancing',
   'Writing',
   'Yoga',
-  'Bird Watching',
+  'Bird',
 ];

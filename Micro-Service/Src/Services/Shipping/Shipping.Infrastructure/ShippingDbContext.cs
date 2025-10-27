@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shipping.Domain;
 using Shipping.Domain.Products;
+using Shipping.Domain.SalesOrders;
 
 namespace Shipping.Infrastructure;
 
@@ -41,7 +42,32 @@ public sealed class ShippingDbContext : DbContext
             b.Property(x => x.Name).HasMaxLength(256).IsRequired();
             b.Property(x => x.UniPrice).IsRequired();
         });
-    }
 
-    
+        modelBuilder.Entity<SalesOrder>()
+            .HasOne(s => s.Customer)
+            .WithMany(c => c.SalesOrders)
+            .HasForeignKey(s => s.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<SalesOrderItem>()
+            .HasOne(i => i.SalesOrder)
+            .WithMany(o => o.Items)
+            .HasForeignKey(i => i.SalesOrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SalesOrderItem>()
+           .HasOne(i => i.Product)
+           .WithMany(p => p.OrderItems)
+           .HasForeignKey(i => i.ProductId)
+           .OnDelete(DeleteBehavior.Restrict);
+            
+
+        modelBuilder.Entity<SalesOrder>()
+            .Property(o => o.TotalAmount)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<SalesOrderItem>()
+            .Property(i => i.UnitPrice)
+            .HasPrecision(18, 2);
+    }
 }

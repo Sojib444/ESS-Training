@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Shipping.Domain;
+using Shipping.Domain.Products;
 
 namespace Shipping.Infrastructure;
 
@@ -14,6 +15,7 @@ public sealed class ShippingDbContext : DbContext
     }
 
     public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,5 +33,15 @@ public sealed class ShippingDbContext : DbContext
             b.Property(x => x.Gender).HasMaxLength(512).IsRequired();
             b.HasIndex(x => x.Email).IsUnique();
         });
+
+        modelBuilder.Entity<Product>(b =>
+        {
+            b.ToTable("product");
+            b.HasKey(x => x.Id);
+            b.Property(x => x.Name).HasMaxLength(256).IsRequired();
+            b.Property(x => x.UniPrice).IsRequired();
+        });
     }
+
+    
 }

@@ -42,6 +42,14 @@ public class DeleteCustomerHandler : IRequestHandler<DeleteCustomer>
     public DeleteCustomerHandler(ICustomerWriter writer) => _writer = writer;
     public async Task Handle(DeleteCustomer request, CancellationToken ct) =>
         await _writer.DeleteAsync(request.Id, ct);
-}   
+}
 
-
+public class CustomerDropDownListHandler : IRequestHandler<CustomerDropDownList, IReadOnlyList<CustomerDropdownListDto>>
+{
+    public readonly ICustomerReader _reader;
+    public CustomerDropDownListHandler(ICustomerReader reader) => _reader = reader;
+    public async Task<IReadOnlyList<CustomerDropdownListDto>> Handle(CustomerDropDownList request, CancellationToken cancellationToken)
+    {
+        return await _reader.GetCustomerDropDownListAsync(request.queryName,cancellationToken);
+    }
+}

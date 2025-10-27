@@ -4,6 +4,7 @@ public interface ICustomerReader
 {
     Task<CustomerDto?> GetByIdAsync(Guid id, CancellationToken ct);
     Task<IReadOnlyList<CustomerDto>> GetAllAsync(int skip, int take, CancellationToken ct);
+    Task<IReadOnlyList<CustomerDropdownListDto>> GetCustomerDropDownListAsync(string? queryName,CancellationToken ct);
 }
 
 

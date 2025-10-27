@@ -12,7 +12,7 @@ public sealed class CustomerReader : ICustomerReader
     public async Task<CustomerDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         var customer = await _db.Customers
-                               .FirstOrDefaultAsync(c => c.Id == id, ct);
+            .FirstOrDefaultAsync(c => c.Id == id, ct);
         if (customer is null)
             return null;
         return new CustomerDto(
@@ -42,7 +42,7 @@ public sealed class CustomerReader : ICustomerReader
         {
             return null!;
         }
-        
+
         return customers.Select(c => new CustomerDto(
                     c.Id,
                     c.Name,
@@ -54,6 +54,23 @@ public sealed class CustomerReader : ICustomerReader
                     JsonSerializer.Deserialize<List<string>>(c.HobbiesJson ?? "[]") ?? new List<string>(),
                     JsonSerializer.Deserialize<List<string>>(c.CountriesJson ?? "[]") ?? new List<string>()
                     )).ToList();
-                
+
+    }
+
+    public async Task<IReadOnlyList<CustomerDropdownListDto>> GetCustomerDropDownListAsync(string? queryName, CancellationToken ct)
+    {
+        if (!string.IsNullOrWhiteSpace(queryName))
+        {
+            return await _db.Customers
+                .Where(x => x.Name.Contains(queryName))
+                .OrderBy(c => c.Name)
+                .Select(x => new CustomerDropdownListDto(x.Id, x.Name))
+                .ToListAsync(ct);
+        }
+
+        return await _db.Customers
+            .OrderBy(c => c.Name)
+            .Select(x => new CustomerDropdownListDto(x.Id, x.Name))
+            .ToListAsync(ct);
     }
 }
